@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-bg-warm: #F9F7F2;
+  --color-primary-warm: #F39C12; /* More vibrant amber */
+  --color-primary-hover: #E67E22;
+  --color-secondary-warm: #34495E;
+  --color-accent-calm: #2ECC71; /* More vibrant green */
+  --color-error-soft: #E74C3C;
+  --color-ink: #1A1A1A;
+  --color-card-bg: #FFFFFF;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-warm text-ink font-sans antialiased;
+  }
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+}
