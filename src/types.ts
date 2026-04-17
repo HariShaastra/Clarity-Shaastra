@@ -30,4 +30,4 @@ export interface IdentityCheck {
   didAct: boolean;
 }
 
-export type View = 'home' | 'clarity-flow' | 'decision-log' | 'reflect' | 'insights' | 'weekly-review' | 'setup-why';
+export type View = 'home' | 'clarity-flow' | 'decision-log' | 'reflect' | 'insights' | 'weekly-review' | 'setup-why' | 'about';

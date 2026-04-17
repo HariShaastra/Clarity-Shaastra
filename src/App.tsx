@@ -13,6 +13,7 @@ import { ReflectionView } from './views/ReflectionView';
 import { Insights } from './views/Insights';
 import { WeeklyReview } from './views/WeeklyReview';
 import { SetupWhy } from './views/SetupWhy';
+import { About } from './views/About';
 import { AnimatePresence, motion } from 'motion/react';
 
 export default function App() {
@@ -126,6 +127,12 @@ export default function App() {
           <WeeklyReview 
             decisions={decisions} 
             identityChecks={identityChecks}
+            onBack={() => setCurrentView('home')} 
+          />
+        );
+      case 'about':
+        return (
+          <About 
             onBack={() => setCurrentView('home')} 
           />
         );

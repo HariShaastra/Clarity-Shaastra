@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Layout, Button, Card, Input } from '../components/UI';
 import { Decision, View, UserConfig, IdentityCheck } from '../types';
-import { Compass, BookOpen, TrendingUp, BarChart3, Flame, Edit2, X, Check } from 'lucide-react';
+import { Compass, BookOpen, TrendingUp, BarChart3, Flame, Edit2, X, Check, Info } from 'lucide-react';
 import { Logo } from '../components/Logo';
 
 interface HomeProps {
@@ -208,6 +208,16 @@ export const Home: React.FC<HomeProps> = ({
             </Card>
           </motion.div>
         )}
+
+        <div className="pb-8 pt-4 flex justify-center">
+          <button 
+            onClick={() => onNavigate('about')}
+            className="flex items-center gap-2 text-[10px] font-bold text-secondary-warm/40 uppercase tracking-[0.2em] hover:text-primary-warm transition-colors"
+          >
+            <Info size={12} />
+            About Clarity Shaastra
+          </button>
+        </div>
       </div>
     </Layout>
   );
