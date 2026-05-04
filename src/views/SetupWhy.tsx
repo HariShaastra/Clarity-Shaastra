@@ -58,7 +58,7 @@ export const SetupWhy: React.FC<SetupWhyProps> = ({ onComplete }) => {
             <textarea 
               autoFocus
               className="w-full h-32 bg-white border-2 border-black/5 rounded-2xl px-4 py-3 focus:border-primary-warm outline-none transition-all placeholder:text-secondary-warm/50 resize-none"
-              placeholder="e.g. To clear CA Inter and build a secure future for my family."
+              placeholder="e.g. To lead a healthier life and be more present for my family."
               value={why}
               onChange={(e) => setWhy(e.target.value)}
             />

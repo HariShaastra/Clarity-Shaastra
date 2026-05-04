@@ -11,9 +11,9 @@ interface ClarityFlowProps {
 }
 
 const QUICK_BLOCKS = [
-  "Too much syllabus",
-  "Don't understand",
-  "Feeling lazy",
+  "Feeling overwhelmed",
+  "Lack of information",
+  "Fear of failure",
   "Distracted"
 ];
 
@@ -55,13 +55,13 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             className="space-y-6"
           >
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold">Define</h2>
-              <p className="text-secondary-warm">What exactly are you trying to do?</p>
+              <h2 className="text-2xl font-bold text-ink">The Goal</h2>
+              <p className="text-sm text-secondary-warm">What do you want to achieve right now?</p>
             </div>
             <Input 
               autoFocus
               maxLength={120}
-              placeholder="e.g. Revise GST Input Credit"
+              placeholder="e.g. Complete the monthly report"
               value={formData.goal || ''}
               onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
             />
@@ -82,8 +82,8 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             className="space-y-6"
           >
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold">Block</h2>
-              <p className="text-secondary-warm">What is stopping you?</p>
+              <h2 className="text-2xl font-bold text-ink">The Obstacle</h2>
+              <p className="text-sm text-secondary-warm">What is stopping you?</p>
             </div>
             <div className="grid grid-cols-1 gap-2">
               {QUICK_BLOCKS.map(block => (
@@ -125,8 +125,8 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             className="space-y-6"
           >
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold">Truth</h2>
-              <p className="text-secondary-warm">Is this real or an excuse?</p>
+              <h2 className="text-2xl font-bold text-ink">Truth Check</h2>
+              <p className="text-sm text-secondary-warm">Is this obstacle real or just an excuse?</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <button
@@ -168,12 +168,12 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             className="space-y-6"
           >
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold">Next Step</h2>
-              <p className="text-secondary-warm">What is the smallest next step?</p>
+              <h2 className="text-2xl font-bold text-ink">First Action</h2>
+              <p className="text-sm text-secondary-warm">What is the smallest first step?</p>
             </div>
             <Input 
               autoFocus
-              placeholder="e.g. Open module / read first page"
+              placeholder="e.g. Open the document / write first line"
               value={formData.nextStep || ''}
               onChange={(e) => setFormData({ ...formData, nextStep: e.target.value, decision: e.target.value })}
             />
@@ -195,12 +195,12 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             className="space-y-6"
           >
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold">Decision</h2>
-              <p className="text-secondary-warm">What decision are you making?</p>
+              <h2 className="text-2xl font-bold text-ink">Commitment</h2>
+              <p className="text-sm text-secondary-warm">What exactly are you going to do now?</p>
             </div>
             <Input 
               autoFocus
-              placeholder="e.g. Study Audit for 25 minutes"
+              placeholder="e.g. Work on the report for 25 minutes"
               value={formData.decision || ''}
               onChange={(e) => setFormData({ ...formData, decision: e.target.value })}
             />

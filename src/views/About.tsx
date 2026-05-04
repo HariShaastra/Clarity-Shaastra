@@ -15,16 +15,15 @@ export const About: React.FC<AboutProps> = ({ onBack }) => {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-6 pb-20"
       >
-        <Card className="bg-primary-warm/5 border-primary-warm/10">
+        <Card className="bg-primary-warm/5 border-primary-warm/10 py-6">
           <div className="flex gap-4 items-start">
-            <div className="p-3 bg-primary-warm text-white rounded-2xl">
+            <div className="p-3 bg-primary-warm text-white rounded-2xl shrink-0">
               <Zap size={24} />
             </div>
             <div>
               <h3 className="text-xl font-bold text-ink mb-2">What is Clarity Shaastra?</h3>
               <p className="text-secondary-warm leading-relaxed">
-                Clarity Shaastra is a minimal, powerful thinking system designed to help you strip away overthinking and act with purpose. 
-                It is built on the philosophy that progress is the result of clear decisions followed by immediate action.
+                A direct system to stop overthinking. We believe progress comes from clear decisions followed by immediate action.
               </p>
             </div>
           </div>
@@ -33,16 +32,16 @@ export const About: React.FC<AboutProps> = ({ onBack }) => {
         <Card className="space-y-4">
           <h3 className="font-bold flex items-center gap-2 text-ink">
             <Target size={18} className="text-primary-warm" />
-            What It Does
+            Core Functions
           </h3>
           <ul className="space-y-3">
             {[
-              "Converts confusion into concrete next steps.",
-              "Enforces the 5-minute rule for immediate momentum.",
-              "Logs decisions to build long-term judgment.",
-              "Tracks your identity through daily follow-through."
+              "Converts confusion into simple next steps.",
+              "Enforces the 5-minute rule for action.",
+              "Logs every decision to build judgment.",
+              "Tracks your daily follow-through."
             ].map((item, i) => (
-              <li key={i} className="flex gap-3 text-sm text-secondary-warm">
+              <li key={i} className="flex gap-3 text-sm text-secondary-warm font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary-warm mt-1.5 shrink-0" />
                 {item}
               </li>
@@ -50,15 +49,15 @@ export const About: React.FC<AboutProps> = ({ onBack }) => {
           </ul>
         </Card>
 
-        <Card className="bg-ink text-white/90">
+        <Card className="bg-ink text-white/90 py-5">
           <h3 className="font-bold flex items-center gap-2 mb-3">
             <Shield size={18} className="text-accent-calm" />
-            Disclaimer
+            Disclaimer & Privacy
           </h3>
           <p className="text-xs leading-relaxed text-white/60">
-            Clarity Shaastra is a tool for self-reflection and decision-making support. It is NOT a substitute for professional mental health advice, financial planning, or legal counsel. 
+            This is a tool for self-reflection. Not a substitute for professional advice.
             <br /><br />
-            The app stores all your data locally on your device. We do not transmit or store your personal reflections on any server. You are solely responsible for the decisions you make and the actions you take based on the outputs of this system.
+            Data is 100% private. All your reflections are stored ONLY on your device. We never see your data.
           </p>
         </Card>
 

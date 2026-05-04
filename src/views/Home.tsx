@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Layout, Button, Card, Input } from '../components/UI';
 import { Decision, View, UserConfig, IdentityCheck } from '../types';
-import { Compass, BookOpen, TrendingUp, BarChart3, Flame, Edit2, X, Check, Info } from 'lucide-react';
+import { Compass, BookOpen, TrendingUp, BarChart3, Flame, Edit2, X, Check, Info, Zap, Shield } from 'lucide-react';
 import { Logo } from '../components/Logo';
 
 interface HomeProps {
@@ -65,6 +65,16 @@ export const Home: React.FC<HomeProps> = ({
             Namaste, <span className="text-primary-warm">{userConfig?.userName || 'Seeker'}</span>
           </h2>
         </div>
+
+        <Card className="bg-primary-warm/5 border-primary-warm/10 py-5">
+          <div className="flex items-center gap-3 mb-2">
+            <Zap size={16} className="text-primary-warm" />
+            <h3 className="text-xs font-bold text-ink uppercase tracking-widest">The System</h3>
+          </div>
+          <p className="text-sm font-medium text-secondary-warm leading-snug">
+            Clarity Shaastra turns confusion into action. No overthinking. Just clear decisions and immediate steps.
+          </p>
+        </Card>
 
         {/* Big Editable WHY Button */}
         <Card className="relative overflow-hidden border-2 border-primary-warm/20 bg-gradient-to-br from-white to-primary-warm/5 p-8">
@@ -161,7 +171,7 @@ export const Home: React.FC<HomeProps> = ({
             </div>
           </div>
           
-          <p className="text-sm text-white/70 mb-4">Did you act like a serious student today?</p>
+          <p className="text-sm text-white/70 mb-4">Did you act with intention today?</p>
           
           {todayCheck ? (
             <div className={`py-2 px-4 rounded-xl text-center font-bold ${todayCheck.didAct ? 'bg-accent-calm/20 text-accent-calm' : 'bg-error-soft/20 text-error-soft'}`}>
@@ -209,14 +219,19 @@ export const Home: React.FC<HomeProps> = ({
           </motion.div>
         )}
 
-        <div className="pb-8 pt-4 flex justify-center">
+        <div className="pb-8 pt-4 flex flex-col items-center gap-4">
           <button 
             onClick={() => onNavigate('about')}
             className="flex items-center gap-2 text-[10px] font-bold text-secondary-warm/40 uppercase tracking-[0.2em] hover:text-primary-warm transition-colors"
           >
             <Info size={12} />
-            About Clarity Shaastra
+            Full App Info
           </button>
+          
+          <div className="flex items-center gap-2 text-[8px] text-secondary-warm/30 uppercase tracking-[0.1em] text-center max-w-[200px]">
+            <Shield size={10} />
+            <span>Disclaimer: Local tool for decision support. No professional advice. Data is private.</span>
+          </div>
         </div>
       </div>
     </Layout>
