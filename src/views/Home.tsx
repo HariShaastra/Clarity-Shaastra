@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Layout, Button, Card, Input } from '../components/UI';
 import { Decision, View, UserConfig, IdentityCheck } from '../types';
-import { Compass, BookOpen, TrendingUp, BarChart3, Flame, Edit2, X, Check, Info, Zap, Shield } from 'lucide-react';
+import { Compass, BookOpen, TrendingUp, BarChart3, Flame, Edit2, X, Check, Info, Zap, Shield, LogOut } from 'lucide-react';
 import { Logo } from '../components/Logo';
+import { logout } from '../lib/firebase';
 
 interface HomeProps {
   onNavigate: (view: View) => void;
@@ -12,6 +13,7 @@ interface HomeProps {
   identityChecks: IdentityCheck[];
   onIdentityCheck: (didAct: boolean) => void;
   onUpdateWhy: (why: string) => void;
+  isLoggedIn: boolean;
 }
 
 export const Home: React.FC<HomeProps> = ({ 
@@ -20,7 +22,8 @@ export const Home: React.FC<HomeProps> = ({
   userConfig, 
   identityChecks,
   onIdentityCheck,
-  onUpdateWhy
+  onUpdateWhy,
+  isLoggedIn
 }) => {
   const [isEditingWhy, setIsEditingWhy] = useState(false);
   const [editedWhy, setEditedWhy] = useState(userConfig?.why || '');
@@ -54,9 +57,19 @@ export const Home: React.FC<HomeProps> = ({
               <p className="text-[10px] font-bold text-secondary-warm uppercase tracking-widest">Think clearly. Act decisively.</p>
             </div>
           </div>
-          <div className="flex items-center gap-1 text-primary-warm bg-primary-warm/10 px-3 py-1 rounded-full">
-            <Flame size={14} />
-            <span className="text-xs font-bold">{streak}</span>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 text-primary-warm bg-primary-warm/10 px-3 py-1 rounded-full">
+              <Flame size={14} />
+              <span className="text-xs font-bold">{streak}</span>
+            </div>
+            {!isLoggedIn && (
+              <button 
+                onClick={() => onNavigate('login')}
+                className="flex items-center gap-1 text-accent-calm bg-accent-calm/10 px-3 py-1 rounded-full text-xs font-bold"
+              >
+                Sync
+              </button>
+            )}
           </div>
         </div>
 
@@ -220,13 +233,25 @@ export const Home: React.FC<HomeProps> = ({
         )}
 
         <div className="pb-8 pt-4 flex flex-col items-center gap-4">
-          <button 
-            onClick={() => onNavigate('about')}
-            className="flex items-center gap-2 text-[10px] font-bold text-secondary-warm/40 uppercase tracking-[0.2em] hover:text-primary-warm transition-colors"
-          >
-            <Info size={12} />
-            Full App Info
-          </button>
+          <div className="flex flex-col items-center gap-2 w-full px-4">
+            <button 
+              onClick={() => onNavigate('about')}
+              className="flex items-center gap-2 text-[10px] font-bold text-secondary-warm/40 uppercase tracking-[0.2em] hover:text-primary-warm transition-colors"
+            >
+              <Info size={12} />
+              Full App Info
+            </button>
+
+            {isLoggedIn && (
+              <button 
+                onClick={() => logout()}
+                className="mt-4 flex items-center gap-2 px-6 py-3 rounded-2xl bg-secondary-warm/5 text-secondary-warm hover:text-error-soft hover:bg-error-soft/5 transition-all text-sm font-bold w-full justify-center"
+              >
+                <LogOut size={16} />
+                Logout Session
+              </button>
+            )}
+          </div>
           
           <div className="flex items-center gap-2 text-[8px] text-secondary-warm/30 uppercase tracking-[0.1em] text-center max-w-[200px]">
             <Shield size={10} />

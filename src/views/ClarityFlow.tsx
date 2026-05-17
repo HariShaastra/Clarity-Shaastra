@@ -11,10 +11,18 @@ interface ClarityFlowProps {
 }
 
 const QUICK_BLOCKS = [
-  "Feeling overwhelmed",
-  "Lack of information",
-  "Fear of failure",
+  "Overwhelmed",
+  "Lack of info",
+  "Afraid of failure",
+  "Just procrastinating",
   "Distracted"
+];
+
+const EMOTIONS = [
+  { label: 'Anxious', color: 'bg-error-soft/10 text-error-soft' },
+  { label: 'Indecisive', color: 'bg-primary-warm/10 text-primary-warm' },
+  { label: 'Unmotivated', color: 'bg-secondary-warm/10 text-secondary-warm' },
+  { label: 'Bored', color: 'bg-ink/5 text-ink' }
 ];
 
 const TIMER_OPTIONS = [
@@ -82,8 +90,37 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             className="space-y-6"
           >
             <div className="space-y-2">
+              <h2 className="text-2xl font-bold text-ink">Honesty Check</h2>
+              <p className="text-sm text-secondary-warm">How do you honestly feel about this task?</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {EMOTIONS.map(emo => (
+                <button
+                  key={emo.label}
+                  onClick={() => nextStep()}
+                  className={`p-4 rounded-2xl font-bold text-sm transition-all border-2 border-transparent hover:border-ink/10 ${emo.color}`}
+                >
+                  {emo.label}
+                </button>
+              ))}
+            </div>
+            <div className="pt-4 text-center">
+              <p className="text-[10px] text-secondary-warm/40 font-bold uppercase tracking-widest leading-relaxed">
+                Naming the emotion reduces its power over you.
+              </p>
+            </div>
+          </motion.div>
+        );
+      case 3:
+        return (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="space-y-2">
               <h2 className="text-2xl font-bold text-ink">The Obstacle</h2>
-              <p className="text-sm text-secondary-warm">What is stopping you?</p>
+              <p className="text-sm text-secondary-warm">What is REALLY stopping you?</p>
             </div>
             <div className="grid grid-cols-1 gap-2">
               {QUICK_BLOCKS.map(block => (
@@ -117,7 +154,36 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             </Button>
           </motion.div>
         );
-      case 3:
+      case 4:
+        return (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold text-ink">The Cost</h2>
+              <p className="text-sm text-secondary-warm">What happens if you continue to delay this?</p>
+            </div>
+            <div className="grid grid-cols-1 gap-3">
+              {[
+                "Lost momentum",
+                "Increased stress later",
+                "Falling behind on goals",
+                "Regret tonight"
+              ].map(cost => (
+                <button
+                  key={cost}
+                  onClick={() => nextStep()}
+                  className="w-full text-left px-4 py-4 rounded-2xl border-2 border-black/5 hover:border-error-soft/30 transition-all font-medium text-secondary-warm/80 hover:text-error-soft"
+                >
+                  {cost}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        );
+      case 5:
         return (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -126,7 +192,7 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
           >
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-ink">Truth Check</h2>
-              <p className="text-sm text-secondary-warm">Is this obstacle real or just an excuse?</p>
+              <p className="text-sm text-secondary-warm">Is this obstacle an objective fact or an excuse?</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <button
@@ -140,8 +206,8 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
                     : 'border-black/5 hover:border-black/10'
                 }`}
               >
-                <div className="text-lg font-bold">Real Problem</div>
-                <div className="text-xs text-secondary-warm mt-1">Legitimate obstacle</div>
+                <div className="text-lg font-bold text-ink">Fact</div>
+                <div className="text-xs text-secondary-warm mt-1">Real constraint</div>
               </button>
               <button
                 onClick={() => {
@@ -154,13 +220,13 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
                     : 'border-black/5 hover:border-black/10'
                 }`}
               >
-                <div className="text-lg font-bold">Excuse</div>
-                <div className="text-xs text-secondary-warm mt-1">I'm just avoiding it</div>
+                <div className="text-lg font-bold text-ink">Excuse</div>
+                <div className="text-xs text-secondary-warm mt-1">Avoiding effort</div>
               </button>
             </div>
           </motion.div>
         );
-      case 4:
+      case 6:
         return (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -168,8 +234,8 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             className="space-y-6"
           >
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-ink">First Action</h2>
-              <p className="text-sm text-secondary-warm">What is the smallest first step?</p>
+              <h2 className="text-2xl font-bold text-ink">Action Design</h2>
+              <p className="text-sm text-secondary-warm">What is the smallest 2-minute step?</p>
             </div>
             <Input 
               autoFocus
@@ -177,7 +243,7 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
               value={formData.nextStep || ''}
               onChange={(e) => setFormData({ ...formData, nextStep: e.target.value, decision: e.target.value })}
             />
-            <p className="text-xs text-primary-warm font-bold italic">"Make it smaller?"</p>
+            <p className="text-xs text-primary-warm font-bold italic">"Action is the only cure for overthinking."</p>
             <Button 
               disabled={!formData.nextStep} 
               onClick={nextStep} 
@@ -187,7 +253,7 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
             </Button>
           </motion.div>
         );
-      case 5:
+      case 7:
         return (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -196,16 +262,16 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
           >
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-ink">Commitment</h2>
-              <p className="text-sm text-secondary-warm">What exactly are you going to do now?</p>
+              <p className="text-sm text-secondary-warm">What exactly will you do for the next few minutes?</p>
             </div>
             <Input 
               autoFocus
-              placeholder="e.g. Work on the report for 25 minutes"
+              placeholder="e.g. Focus on report for 25 minutes"
               value={formData.decision || ''}
               onChange={(e) => setFormData({ ...formData, decision: e.target.value })}
             />
             <div className="space-y-4 pt-4">
-              <p className="text-sm font-bold text-secondary-warm uppercase tracking-wider">Set Timer</p>
+              <p className="text-sm font-bold text-secondary-warm uppercase tracking-wider">Set Focus Timer</p>
               <div className="grid grid-cols-3 gap-2">
                 {TIMER_OPTIONS.map(opt => (
                   <button
@@ -221,7 +287,7 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
                   </button>
                 ))}
               </div>
-              {timerDuration === 0 || (timerDuration !== 300 && timerDuration !== 1500) ? (
+              {(timerDuration === 0 || (timerDuration !== 300 && timerDuration !== 1500)) && (
                 <div className="flex items-center gap-2">
                   <Input 
                     type="number"
@@ -232,20 +298,20 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
                       setTimerDuration(parseInt(e.target.value) * 60 || 0);
                     }}
                   />
-                  <span className="font-bold text-secondary-warm">min</span>
+                  <span className="font-bold text-secondary-warm text-sm">min</span>
                 </div>
-              ) : null}
+              )}
             </div>
             <Button 
               disabled={!formData.decision || timerDuration <= 0} 
               onClick={nextStep} 
               className="w-full"
             >
-              Confirm & Start
+              Start Focus Session
             </Button>
           </motion.div>
         );
-      case 6:
+      case 8:
         return (
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
@@ -264,11 +330,11 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
                   <CheckCircle2 size={48} />
                 </div>
                 <div className="space-y-2">
-                  <h2 className="text-3xl font-bold">Great Start!</h2>
-                  <p className="text-secondary-warm">You took action. That's the hardest part.</p>
+                  <h2 className="text-3xl font-bold">Commitment Kept</h2>
+                  <p className="text-secondary-warm">You took action. The cycle is broken.</p>
                 </div>
                 <Button onClick={handleFinish} className="w-full mt-8">
-                  Complete Session
+                  Record Progress
                 </Button>
               </div>
             )}
@@ -281,8 +347,8 @@ export const ClarityFlow: React.FC<ClarityFlowProps> = ({ onComplete, onCancel }
 
   return (
     <Layout 
-      title={step === 6 ? "Focus Mode" : `Step ${step} of 5`} 
-      showBack={step !== 6}
+      title={step === 8 ? "Focus Mode" : `Step ${step} of 7`} 
+      showBack={step !== 8}
       onBack={step > 1 ? () => setStep(step - 1) : onCancel}
     >
       <div className="absolute top-8 right-6">

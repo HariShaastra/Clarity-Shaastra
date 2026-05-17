@@ -14,7 +14,10 @@ import { Insights } from './views/Insights';
 import { WeeklyReview } from './views/WeeklyReview';
 import { SetupWhy } from './views/SetupWhy';
 import { About } from './views/About';
+import { Login } from './views/Login';
 import { AnimatePresence, motion } from 'motion/react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './lib/firebase';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<View>('home');
@@ -22,6 +25,8 @@ export default function App() {
     decisions, 
     userConfig, 
     identityChecks, 
+    user,
+    loading,
     addDecision, 
     updateDecision, 
     setUserProfile,
@@ -29,12 +34,36 @@ export default function App() {
     addIdentityCheck 
   } = useDecisions();
   const [selectedDecisionId, setSelectedDecisionId] = useState<string | null>(null);
+  const [hasSkippedLogin, setHasSkippedLogin] = useState(() => localStorage.getItem('skip_login') === 'true');
 
   useEffect(() => {
-    if (!userConfig && currentView !== 'setup-why') {
+    if (loading) return;
+    
+    if (!user && !userConfig && !hasSkippedLogin && currentView !== 'login') {
+      setCurrentView('login');
+    } else if (user && currentView === 'login') {
+      setCurrentView('home');
+    } else if ((user || hasSkippedLogin) && !userConfig && currentView !== 'setup-why' && currentView !== 'login') {
       setCurrentView('setup-why');
     }
-  }, [userConfig, currentView]);
+  }, [user, userConfig, currentView, loading, hasSkippedLogin]);
+
+  useEffect(() => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (u) => {
+      // If logging out, we can choose to clear skip_login to re-prompt
+      if (!u && user) {
+        localStorage.removeItem('skip_login');
+        setHasSkippedLogin(false);
+      }
+    });
+    return () => unsubscribeAuth();
+  }, [user]);
+
+  const handleSkipLogin = () => {
+    setHasSkippedLogin(true);
+    localStorage.setItem('skip_login', 'true');
+    setCurrentView('home');
+  };
 
   const latestDecision = decisions[0];
   const pendingReflection = decisions.find(d => d.status === 'pending' && !d.reflection);
@@ -72,6 +101,7 @@ export default function App() {
             identityChecks={identityChecks}
             onIdentityCheck={addIdentityCheck}
             onUpdateWhy={updateWhy}
+            isLoggedIn={!!user}
           />
         );
       case 'setup-why':
@@ -136,12 +166,21 @@ export default function App() {
             onBack={() => setCurrentView('home')} 
           />
         );
+      case 'login':
+        return (
+          <Login 
+            onLoginSuccess={() => setCurrentView('home')} 
+            onSkip={handleSkipLogin}
+          />
+        );
       default:
         return <Home 
           onNavigate={setCurrentView} 
           userConfig={userConfig} 
           identityChecks={identityChecks}
           onIdentityCheck={addIdentityCheck}
+          onUpdateWhy={updateWhy}
+          isLoggedIn={!!user}
         />;
     }
   };

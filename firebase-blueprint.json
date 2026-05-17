@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "userConfig": {
+      "title": "User Configuration",
+      "description": "User profile settings and long-term goals.",
+      "type": "object",
+      "properties": {
+        "userName": { "type": "string" },
+        "why": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userName", "why", "createdAt"]
+    },
+    "decision": {
+      "title": "Decision",
+      "description": "A single clarity session result.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "goal": { "type": "string" },
+        "block": { "type": "string" },
+        "truthType": { "type": "string" },
+        "nextStep": { "type": "string" },
+        "decision": { "type": "string" },
+        "status": { "type": "string" },
+        "reflection": {
+          "type": "object",
+          "properties": {
+            "didFollow": { "type": "boolean" },
+            "outcome": { "type": "string" },
+            "learning": { "type": "string" }
+          }
+        }
+      },
+      "required": ["id", "createdAt", "goal", "block", "status"]
+    },
+    "identityCheck": {
+      "title": "Identity Check",
+      "description": "Daily follow-through tracking.",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "didAct": { "type": "boolean" }
+      },
+      "required": ["date", "didAct"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "userConfig",
+      "description": "User profile data."
+    },
+    "/users/{userId}/decisions/{decisionId}": {
+      "schema": "decision",
+      "description": "User's decision history."
+    },
+    "/users/{userId}/identityChecks/{checkId}": {
+      "schema": "identityCheck",
+      "description": "User's daily identity logs."
+    }
+  }
+}
